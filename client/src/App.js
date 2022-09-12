@@ -1,5 +1,7 @@
 import Home from "./pages/Home";
 import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Cart from "./pages/Cart";
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,8 +18,14 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
+          <Route path="/cart">
+            <Cart />
+          </Route>
           <Route path="/register">
             {loggedInUser ? <Redirect to="/" /> : <Register />}
+          </Route>
+          <Route path="/login">
+            {loggedInUser ? <Redirect to="/" /> : <Login />}
           </Route>
         </Switch>
       </Router>
