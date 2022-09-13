@@ -8,6 +8,8 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import ProductList from "./pages/ProductList";
+import Product from "./pages/Product";
 
 function App() {
   const loggedInUser = false;
@@ -17,6 +19,12 @@ function App() {
         <Switch>
           <Route exact path="/">
             <Home />
+          </Route>
+          <Route path="/products/:category">
+            <ProductList />
+          </Route>
+          <Route path="/product/:id">
+            <Product />
           </Route>
           <Route path="/cart">
             <Cart />
