@@ -35,7 +35,7 @@ const Error = styled.div`
   color: red;
 `;
 const Link = styled.a`
-  margin-top: 10px;
+  padding: 10px;
   font-size: xx-small;
   text-decoration: underline;
   cursor: pointer;
