@@ -72,6 +72,9 @@ const Navbar = () => {
             <Logo>Kaynat.</Logo>
           </Center>
           <Right>
+            <Link to="/" style={{ textDecoration: "none" }}>
+              <MenuItem>Home</MenuItem>
+            </Link>
             <Link to="/register" style={{ textDecoration: "none" }}>
               <MenuItem>Register</MenuItem>
             </Link>
