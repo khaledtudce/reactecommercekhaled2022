@@ -1,5 +1,6 @@
 import { Add, Remove } from "@material-ui/icons";
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
@@ -81,51 +82,61 @@ const Button = styled.button`
 `;
 
 const Product = () => {
-  const [quantity, setQuantity] = useState(0);
+  const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
   const location = useLocation();
-  const img = location.pathname.split("/")[2];
+  const productId = location.pathname.split("/")[2];
 
   const adjustQuantity = (operation) => {
     operation === "remove" && quantity > 1 && setQuantity(quantity - 1);
     operation === "add" && setQuantity(quantity + 1);
   };
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:5001/api/products/" + productId
+        );
+        setProduct(res.data);
+      } catch (error) {
+        console.log("Could not retrieve Product");
+      }
+    };
+    getProduct();
+  }, [productId]);
+
   return (
     <Container>
       <Announcement />
       <Navbar />
       <Wrapper>
         <ImageContainer>
-          <Image src={popularProducts[2].img}></Image>
+          <Image src={product.img}></Image>
         </ImageContainer>
         <InfoContainer>
-          <Title>Colorful Shirt</Title>
-          <Description>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </Description>
-          <Price>$50</Price>
+          <Title>{product.title}</Title>
+          <Description>{product.desc}</Description>
+          <Price>${product.price}</Price>
           <FilterContainer>
             <Filter>
               <FilterTitle>Color:</FilterTitle>
-              <FilterColor
-                color="red"
-                onClick={(e) => setColor("red")}
-              ></FilterColor>
-              <FilterColor
-                color="blue"
-                onClick={(e) => setColor("blue")}
-              ></FilterColor>
+              {product.color?.map((c) => (
+                <FilterColor
+                  key={c}
+                  color={c}
+                  onClick={() => setColor({ c })}
+                ></FilterColor>
+              ))}
             </Filter>
             <Filter>
               <FilterTitle>Size:</FilterTitle>
               <FilterSize onChange={(e) => setSize(e.target.value)}>
-                <FilterSizeOption>XS</FilterSizeOption>
-                <FilterSizeOption>XS</FilterSizeOption>
-                <FilterSizeOption>M</FilterSizeOption>
-                <FilterSizeOption>L</FilterSizeOption>
-                <FilterSizeOption>XL</FilterSizeOption>
+                {product.size?.map((s) => (
+                  <FilterSizeOption>{s}</FilterSizeOption>
+                ))}
               </FilterSize>
             </Filter>
           </FilterContainer>
