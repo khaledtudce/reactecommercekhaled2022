@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
-import { popularProducts } from "../data";
+//import { popularProducts } from "../data";
 import Product from "./Product";
+import axios from "axios";
 
 const Container = styled.div`
   display: flex;
   padding: 20px;
+  flex-wrap: wrap;
   justify-content: space-between;
 `;
 
@@ -15,7 +17,19 @@ const Products = ({ cat, filters, sort }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
-    setProducts(popularProducts);
+    const getProducts = async () => {
+      try {
+        const res = await axios.get(
+          cat
+            ? `http://localhost:5001/api/products?category=${cat}`
+            : "http://localhost:5001/api/products"
+        );
+        setProducts(res.data);
+      } catch (error) {
+        console.log("Could not retrieve products");
+      }
+    };
+    getProducts();
   }, [cat]);
 
   useEffect(() => {

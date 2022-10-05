@@ -38,7 +38,7 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
 });
 
 //get
-router.get("/:id", verifyTokenAndAdmin, async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     res.status(200).json(product);
@@ -48,9 +48,19 @@ router.get("/:id", verifyTokenAndAdmin, async (req, res) => {
 });
 
 //get all
-router.get("/", verifyTokenAndAdmin, async (req, res) => {
+router.get("/", async (req, res) => {
+  const qCategory = req.query.category;
   try {
-    const products = await Product.find();
+    let products;
+    if (qCategory) {
+      products = await Product.find({
+        categories: {
+          $in: [qCategory],
+        },
+      });
+    } else {
+      products = await Product.find();
+    }
     res.status(200).json(products);
   } catch (error) {
     res.status(500).json(error);
