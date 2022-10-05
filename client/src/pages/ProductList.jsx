@@ -9,7 +9,7 @@ import { useState } from "react";
 
 const Container = styled.div``;
 
-const Title = styled.span`
+const Title = styled.h1`
   margin: 20px;
 `;
 const FilterContainer = styled.div`
