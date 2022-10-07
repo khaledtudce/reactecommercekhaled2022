@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import { popularProducts } from "../data";
 import { Add, Remove } from "@material-ui/icons";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const Container = styled.div``;
 const Wrapper = styled.div``;
@@ -114,11 +115,9 @@ const CheckoutButton = styled.button`
 `;
 
 const Cart = () => {
-  const [quantity, setQuantity] = useState(3);
-  const adjustQuantity = (operation) => {
-    operation === "add" && setQuantity(quantity + 1);
-    operation === "remove" && quantity > 1 && setQuantity(quantity - 1);
-  };
+  const adjustQuantity = (operation) => {};
+  const cart = useSelector((state) => state.cart);
+
   return (
     <Container>
       <Announcement />
@@ -137,52 +136,31 @@ const Cart = () => {
         </Top>
         <Bottom>
           <BottomProductList>
-            <BottomProductItem>
-              <ProductImage src={popularProducts[2].img}></ProductImage>
-              <ProductDesc>
-                <ProductName>
-                  <b>Product:</b> Herman Coat
-                </ProductName>
-                <Id>
-                  <b>Id:</b> {"6309eef77091cf8e8fe6d20f"}
-                </Id>
-                <Color color="pink"></Color>
-                <Size>
-                  <b>Size:</b> L
-                </Size>
-              </ProductDesc>
-              <ProductAmountPrice>
-                <Amount>
-                  <Add onClick={() => adjustQuantity("add")}>+</Add>
-                  <Quantity>{quantity}</Quantity>
-                  <Remove onClick={() => adjustQuantity("remove")}>-</Remove>
-                </Amount>
-                <Price>$150</Price>
-              </ProductAmountPrice>
-            </BottomProductItem>
-            <BottomProductItem>
-              <ProductImage src={popularProducts[0].img}></ProductImage>
-              <ProductDesc>
-                <ProductName>
-                  <b>Product:</b> T Shirt cool
-                </ProductName>
-                <Id>
-                  <b>Id:</b> {"6309eef77091cf8e8fe6d20f"}
-                </Id>
-                <Color color="green"></Color>
-                <Size>
-                  <b>Size:</b> L
-                </Size>
-              </ProductDesc>
-              <ProductAmountPrice>
-                <Amount>
-                  <Add onClick={() => adjustQuantity("add")}>+</Add>
-                  <Quantity>{quantity}</Quantity>
-                  <Remove onClick={() => adjustQuantity("remove")}>-</Remove>
-                </Amount>
-                <Price>$150</Price>
-              </ProductAmountPrice>
-            </BottomProductItem>
+            {cart.products.map((item) => (
+              <BottomProductItem>
+                <ProductImage src={item.img}></ProductImage>
+                <ProductDesc>
+                  <ProductName>
+                    <b>Product:</b> {item.title}
+                  </ProductName>
+                  <Id>
+                    <b>Id:</b> {"6309eef77091cf8e8fe6d20f"}
+                  </Id>
+                  <Color color={item.color}></Color>
+                  <Size>
+                    <b>Size:</b> {item.size}
+                  </Size>
+                </ProductDesc>
+                <ProductAmountPrice>
+                  <Amount>
+                    <Add onClick={() => adjustQuantity("add")}>+</Add>
+                    <Quantity>{item.quantity}</Quantity>
+                    <Remove onClick={() => adjustQuantity("remove")}>-</Remove>
+                  </Amount>
+                  <Price>${item.price * item.quantity}</Price>
+                </ProductAmountPrice>
+              </BottomProductItem>
+            ))}
           </BottomProductList>
           <BottomOrderSummery>
             <OderSummeryItem fontSize="30px" fontWeight="200">
@@ -190,7 +168,7 @@ const Cart = () => {
             </OderSummeryItem>
             <OderSummeryItem fontSize="20px" fontWeight="400">
               <OrderSummeryItemText>Subtotal:</OrderSummeryItemText>
-              <OrderSummeryItemPrice>$350</OrderSummeryItemPrice>
+              <OrderSummeryItemPrice>${cart.total}</OrderSummeryItemPrice>
             </OderSummeryItem>
             <OderSummeryItem fontSize="20px" fontWeight="400">
               <OrderSummeryItemText>Estimated Shipping:</OrderSummeryItemText>
@@ -202,7 +180,7 @@ const Cart = () => {
             </OderSummeryItem>
             <OderSummeryItem fontSize="30px" fontWeight="600">
               <OrderSummeryItemText>Total:</OrderSummeryItemText>
-              <OrderSummeryItemPrice>$350</OrderSummeryItemPrice>
+              <OrderSummeryItemPrice>${cart.total}</OrderSummeryItemPrice>
             </OderSummeryItem>
             <CheckoutButton>Checkout Now</CheckoutButton>
           </BottomOrderSummery>

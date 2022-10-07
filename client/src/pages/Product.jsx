@@ -1,13 +1,14 @@
 import { Add, Remove } from "@material-ui/icons";
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
-import { popularProducts } from "../data";
+import { addProduct } from "../redux/cartRedux";
+import { publicRequest } from "../requestMethods";
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -88,6 +89,7 @@ const Product = () => {
   const [size, setSize] = useState("");
   const location = useLocation();
   const productId = location.pathname.split("/")[2];
+  const dispatch = useDispatch();
 
   const adjustQuantity = (operation) => {
     operation === "remove" && quantity > 1 && setQuantity(quantity - 1);
@@ -97,9 +99,7 @@ const Product = () => {
   useEffect(() => {
     const getProduct = async () => {
       try {
-        const res = await axios.get(
-          "http://localhost:5001/api/products/" + productId
-        );
+        const res = await publicRequest.get("products/" + productId);
         setProduct(res.data);
       } catch (error) {
         console.log("Could not retrieve Product");
@@ -107,6 +107,10 @@ const Product = () => {
     };
     getProduct();
   }, [productId]);
+
+  const handleClick = () => {
+    dispatch(addProduct({ ...product, quantity, color, size }));
+  };
 
   return (
     <Container>
@@ -127,7 +131,7 @@ const Product = () => {
                 <FilterColor
                   key={c}
                   color={c}
-                  onClick={() => setColor({ c })}
+                  onClick={() => setColor(c)}
                 ></FilterColor>
               ))}
             </Filter>
@@ -146,7 +150,7 @@ const Product = () => {
               <Amount>{quantity}</Amount>
               <Add onClick={() => adjustQuantity("add")}>+</Add>
             </AmountContainer>
-            <Button>Add to cart</Button>
+            <Button onClick={handleClick}>Add to cart</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>
