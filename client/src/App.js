@@ -10,9 +10,10 @@ import {
 } from "react-router-dom";
 import ProductList from "./pages/ProductList";
 import Product from "./pages/Product";
+import { useSelector } from "react-redux";
 
 function App() {
-  const loggedInUser = false;
+  const loggedInUser = useSelector((state) => state.user.currentUser);
   return (
     <div className="App">
       <Router>
