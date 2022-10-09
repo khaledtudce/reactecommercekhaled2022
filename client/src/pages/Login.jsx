@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { login } from "../redux/apiCalls";
+import { firtLoginDone } from "../redux/userRedux";
 
 const Container = styled.div`
   width: 100vw;
@@ -46,10 +47,13 @@ const Link = styled.a`
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { isFetching, error } = useSelector((state) => state.user);
+  const { isFetching, error, isNewRegistered } = useSelector(
+    (state) => state.user
+  );
   const dispatch = useDispatch();
   const handleClick = (e) => {
     e.preventDefault();
+    if (isNewRegistered) dispatch(firtLoginDone());
     login(dispatch, { username, password });
   };
 

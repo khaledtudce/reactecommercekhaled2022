@@ -1,5 +1,8 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { newRegister } from "../redux/userRedux";
+import { publicRequest } from "../requestMethods";
 
 const Container = styled.div`
   width: 100vw;
@@ -41,12 +44,39 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
+const Status = styled.div`
+  color: ${(props) => props.color};
+`;
+
 const Register = () => {
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const dispatch = new useDispatch();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    const register = async () => {
+      try {
+        await publicRequest.post("/auth/register", {
+          username,
+          email,
+          password,
+        });
+        setSuccess(true);
+        setError(false);
+      } catch (error) {
+        setError(true);
+      }
+    };
+    register();
+    dispatch(newRegister());
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -72,10 +102,18 @@ const Register = () => {
           />
           <Input placeholder="confirm password" type="password" />
         </Form>
+        {error && (
+          <Status color="red">Something went wrong. Please try again</Status>
+        )}
+        {success && (
+          <Status color="green">
+            Successfully created account. Please login now.
+          </Status>
+        )}
         <Agreement>
           By creating account, you are accepting company rules and regulations
         </Agreement>
-        <Button>Create Account</Button>
+        <Button onClick={(e) => handleClick(e)}>Create Account</Button>
       </Wrapper>
     </Container>
   );

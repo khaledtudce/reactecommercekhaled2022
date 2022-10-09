@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 
 function App() {
   const loggedInUser = useSelector((state) => state.user.currentUser);
+  const isNewRegistered = useSelector((state) => state.user.isNewRegistered);
   return (
     <div className="App">
       <Router>
@@ -31,6 +32,7 @@ function App() {
             <Cart />
           </Route>
           <Route path="/register">
+            {isNewRegistered && <Login />}
             {loggedInUser ? <Redirect to="/" /> : <Register />}
           </Route>
           <Route path="/login">
