@@ -101,6 +101,8 @@ const Product = () => {
       try {
         const res = await publicRequest.get("products/" + productId);
         setProduct(res.data);
+        setColor(res.data.color[0]);
+        setSize(res.data.size[0]);
       } catch (error) {
         console.log("Could not retrieve Product");
       }
@@ -139,7 +141,7 @@ const Product = () => {
               <FilterTitle>Size:</FilterTitle>
               <FilterSize onChange={(e) => setSize(e.target.value)}>
                 {product.size?.map((s) => (
-                  <FilterSizeOption>{s}</FilterSizeOption>
+                  <FilterSizeOption key={s}>{s}</FilterSizeOption>
                 ))}
               </FilterSize>
             </Filter>

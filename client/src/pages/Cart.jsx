@@ -7,6 +7,7 @@ import { Add, Remove, RemoveCircle } from "@material-ui/icons";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeProduct } from "../redux/cartRedux";
+import { Link } from "react-router-dom";
 
 const Container = styled.div``;
 const Wrapper = styled.div``;
@@ -114,6 +115,15 @@ const CheckoutButton = styled.button`
   color: white;
   background-color: black;
 `;
+const AddToWishlistButton = styled.button`
+  margin: 0px 20px 30px;
+  padding: 10px;
+  left: 0;
+  width: 25%;
+  cursor: pointer;
+  color: white;
+  background-color: #5eb362;
+`;
 
 const Cart = () => {
   const adjustQuantity = (operation) => {};
@@ -132,9 +142,13 @@ const Cart = () => {
         <Top>
           <TopTitle>Your Bag</TopTitle>
           <TopSecondRow>
-            <TopButton color="gray">Continue Shopping</TopButton>
+            <Link to={"/products"}>
+              <TopButton color="gray">Continue Shopping</TopButton>
+            </Link>
             <TopMiddleContent>
-              <TopMiddleContentItem>Shopping Bag(2)</TopMiddleContentItem>
+              <TopMiddleContentItem>
+                Shopping Bag({cart.quantity})
+              </TopMiddleContentItem>
               <TopMiddleContentItem>Your Wishlist(0)</TopMiddleContentItem>
             </TopMiddleContent>
             <TopButton color="black">Checkout Now</TopButton>
@@ -143,7 +157,7 @@ const Cart = () => {
         <Bottom>
           <BottomProductList>
             {cart.products.map((item) => (
-              <BottomProductItem>
+              <BottomProductItem key={item._id}>
                 <ProductImage src={item.img}></ProductImage>
                 <ProductDesc>
                   <ProductName>
@@ -156,6 +170,7 @@ const Cart = () => {
                   <Size>
                     <b>Size:</b> {item.size}
                   </Size>
+                  <AddToWishlistButton>Add To Wishlist</AddToWishlistButton>
                 </ProductDesc>
                 <ProductAmountPrice>
                   <Amount>
