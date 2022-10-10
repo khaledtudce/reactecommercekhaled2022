@@ -3,9 +3,10 @@ import Announcement from "../components/Announcement";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { popularProducts } from "../data";
-import { Add, Remove } from "@material-ui/icons";
+import { Add, Remove, RemoveCircle } from "@material-ui/icons";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { removeProduct } from "../redux/cartRedux";
 
 const Container = styled.div``;
 const Wrapper = styled.div``;
@@ -117,6 +118,11 @@ const CheckoutButton = styled.button`
 const Cart = () => {
   const adjustQuantity = (operation) => {};
   const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const handleRemove = (e, product) => {
+    e.preventDefault();
+    dispatch(removeProduct(product));
+  };
 
   return (
     <Container>
@@ -144,7 +150,7 @@ const Cart = () => {
                     <b>Product:</b> {item.title}
                   </ProductName>
                   <Id>
-                    <b>Id:</b> {"6309eef77091cf8e8fe6d20f"}
+                    <b>Id:</b> {item._id}
                   </Id>
                   <Color color={item.color}></Color>
                   <Size>
@@ -158,6 +164,13 @@ const Cart = () => {
                     <Remove onClick={() => adjustQuantity("remove")}>-</Remove>
                   </Amount>
                   <Price>${item.price * item.quantity}</Price>
+                  <RemoveCircle
+                    onClick={(e) => handleRemove(e, item)}
+                    style={{
+                      margin: "30px",
+                      cursor: "pointer",
+                    }}
+                  />
                 </ProductAmountPrice>
               </BottomProductItem>
             ))}
