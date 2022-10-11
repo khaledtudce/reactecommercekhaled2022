@@ -2,11 +2,9 @@ import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { popularProducts } from "../data";
 import { Add, Remove, RemoveCircle } from "@material-ui/icons";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeProduct } from "../redux/cartRedux";
+import { adjustQuantities, removeProduct, reset } from "../redux/cartRedux";
 import { Link } from "react-router-dom";
 
 const Container = styled.div``;
@@ -126,12 +124,18 @@ const AddToWishlistButton = styled.button`
 `;
 
 const Cart = () => {
-  const adjustQuantity = (operation) => {};
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const handleRemove = (e, product) => {
     e.preventDefault();
     dispatch(removeProduct(product));
+  };
+  const adjustQuantity = (operation, item) => {
+    dispatch(adjustQuantities({ operation, item }));
+  };
+
+  const handleReset = (e) => {
+    dispatch(reset());
   };
 
   return (
@@ -174,9 +178,11 @@ const Cart = () => {
                 </ProductDesc>
                 <ProductAmountPrice>
                   <Amount>
-                    <Add onClick={() => adjustQuantity("add")}>+</Add>
+                    <Add onClick={() => adjustQuantity("add", item)}>+</Add>
                     <Quantity>{item.quantity}</Quantity>
-                    <Remove onClick={() => adjustQuantity("remove")}>-</Remove>
+                    <Remove onClick={() => adjustQuantity("remove", item)}>
+                      -
+                    </Remove>
                   </Amount>
                   <Price>${item.price * item.quantity}</Price>
                   <RemoveCircle
@@ -211,6 +217,9 @@ const Cart = () => {
               <OrderSummeryItemPrice>${cart.total}</OrderSummeryItemPrice>
             </OderSummeryItem>
             <CheckoutButton>Checkout Now</CheckoutButton>
+            <CheckoutButton onClick={(e) => handleReset(e)}>
+              Reset
+            </CheckoutButton>
           </BottomOrderSummery>
         </Bottom>
       </Wrapper>
