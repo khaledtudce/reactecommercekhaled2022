@@ -11,6 +11,7 @@ import {
 import ProductList from "./pages/ProductList";
 import Product from "./pages/Product";
 import { useSelector } from "react-redux";
+import Wishlist from "./pages/Wishlist";
 
 function App() {
   const loggedInUser = useSelector((state) => state.user.currentUser);
@@ -33,6 +34,9 @@ function App() {
           </Route>
           <Route path="/cart">
             <Cart />
+          </Route>
+          <Route path="/wishlist">
+            <Wishlist />
           </Route>
           <Route path="/register">
             {isNewRegistered && <Login />}

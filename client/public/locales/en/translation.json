@@ -1,4 +1,6 @@
 {
+    "announcement":"Super Deal! Free Shipping on orders over 50$",
+
     "logo_name": "Kaynat",
     "home": "Home",
     "register": "Register",
@@ -20,6 +22,8 @@
     "shipping_discount":"Shipping discount",
     "total":"Total",
     "reset":"Reset",
+
+    "reset_wishlist":"Reset wishlist",
 
     "userful_links":"Useful links",
     "contact":"Contact"

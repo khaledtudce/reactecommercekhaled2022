@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { adjustQuantities, removeProduct, reset } from "../redux/cartRedux";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { addProduct } from "../redux/wishRedux";
 
 const Container = styled.div``;
 const Wrapper = styled.div``;
@@ -121,11 +122,12 @@ const AddToWishlistButton = styled.button`
   width: 25%;
   cursor: pointer;
   color: white;
-  background-color: #5eb362;
+  background-color: #9ee2a2;
 `;
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  const wishlist = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const handleRemove = (e, product) => {
@@ -135,9 +137,14 @@ const Cart = () => {
   const adjustQuantity = (operation, item) => {
     dispatch(adjustQuantities({ operation, item }));
   };
-
   const handleReset = (e) => {
+    e.preventDefault();
     dispatch(reset());
+  };
+  const addToWishlist = (e, item) => {
+    e.preventDefault();
+    dispatch(addProduct(item));
+    dispatch(removeProduct(item));
   };
 
   return (
@@ -155,9 +162,11 @@ const Cart = () => {
               <TopMiddleContentItem>
                 {t("shopping_bag")}({cart.quantity})
               </TopMiddleContentItem>
-              <TopMiddleContentItem>
-                {t("your_wishlist")}(0)
-              </TopMiddleContentItem>
+              <Link to={"/wishlist"}>
+                <TopMiddleContentItem>
+                  {t("your_wishlist")}({wishlist.products.length})
+                </TopMiddleContentItem>
+              </Link>
             </TopMiddleContent>
             <TopButton color="black">{t("checkout_now")}</TopButton>
           </TopSecondRow>
@@ -178,7 +187,9 @@ const Cart = () => {
                   <Size>
                     <b>Size:</b> {item.size}
                   </Size>
-                  <AddToWishlistButton>Add To Wishlist</AddToWishlistButton>
+                  <AddToWishlistButton onClick={(e) => addToWishlist(e, item)}>
+                    Add To Wishlist
+                  </AddToWishlistButton>
                 </ProductDesc>
                 <ProductAmountPrice>
                   <Amount>

@@ -1,4 +1,6 @@
 {
+    "announcement":"Super Angebot! Kostenloser Versand bei Bestellungen über 50$",
+
     "logo_name": "KAYNAT",
     "home": "Startseite",
     "register": "Registrieren",
@@ -20,6 +22,8 @@
     "shipping_discount":"Versand-Rabatt",
     "total":"Insgesamt.",
     "reset":"Zurücksetzen",
+
+    "reset_wishlist":"Reset Wünschliste",
 
     "userful_links":"Nützliche Links",
     "contact":"Kontakt"

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 const Container = styled.div`
   color: #ffffff;
@@ -12,9 +13,10 @@ const Container = styled.div`
 `;
 
 const Announcement = () => {
+  const { t } = useTranslation();
   return (
     <div>
-      <Container>Super Deal! Free Shipping on orders over 50$</Container>
+      <Container>{t("announcement")}</Container>
     </div>
   );
 };
