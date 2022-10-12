@@ -1,4 +1,26 @@
 {
     "logo_name": "কায়নাত",
-    "how_are_you": "কেমন চলছে"
+    "home": "হোম",
+    "register": "রেজিস্টার ",
+    "logout": "বাহির",
+    "login":"লগইন",
+    "shop_now":"এখন কিনুন",
+    
+    "newsletter":"সংবাদ চিঠি",
+    "get_timely_updates_from_your_favourite_products":"আপনার প্রিয় পণ্য থেকে সময়মত আপডেট পান",
+
+    "your_bag":"আপনার থলে",
+    "shopping_bag":"শপিং ব্যাগ",
+    "your_wishlist":"আপনার ইচ্ছা তালিকা",
+    "continue_shopping":"কেনাকাটা চালিয়ে যান",
+    "checkout_now":"এখনই শেষ কর",
+    "order_summery":"অর্ডার সারাংশ",
+    "subtotal":"উপ মোট",
+    "estimated_shipping":"আনুমানিক ডেলিভারি",
+    "shipping_discount":"ডেলিভারি মূল্য ছাড়",
+    "total":"মোট",
+    "reset":"মুছে ফেলো",
+
+    "userful_links":"প্রয়োজনীয় লিঙ্ক",
+    "contact":"যোগাযোগ"
 }

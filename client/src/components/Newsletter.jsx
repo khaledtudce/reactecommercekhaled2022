@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Send } from "@material-ui/icons";
+import { useTranslation } from "react-i18next";
 
 const Container = styled.div`
   display: flex;
@@ -31,10 +32,11 @@ const Button = styled.button`
 `;
 
 const Newsletter = () => {
+  const { t } = useTranslation();
   return (
     <Container>
-      <Title>Newsletter</Title>
-      <Desc>Get timely updates from your favourite products</Desc>
+      <Title>{t("newsletter")}</Title>
+      <Desc>{t("get_timely_updates_from_your_favourite_products")}</Desc>
       <InputContainer>
         <Input placeholder="example@gmail.com"></Input>
         <Button>

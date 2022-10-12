@@ -99,10 +99,10 @@ const Navbar = () => {
           </Center>
           <Right>
             <Link to="/" style={{ textDecoration: "none" }}>
-              <MenuItem>Home</MenuItem>
+              <MenuItem>{t("home")}</MenuItem>
             </Link>
             <Link to="/register" style={{ textDecoration: "none" }}>
-              <MenuItem>Register</MenuItem>
+              <MenuItem>{t("register")}</MenuItem>
             </Link>
             {currentUser ? (
               <>
@@ -110,12 +110,14 @@ const Navbar = () => {
                   <MenuItem>{currentUser.username}</MenuItem>
                 </Link>
                 <Link to="/login" style={{ textDecoration: "none" }}>
-                  <MenuItem onClick={(e) => handleClick(e)}>Logout</MenuItem>
+                  <MenuItem onClick={(e) => handleClick(e)}>
+                    {t("logout")}
+                  </MenuItem>
                 </Link>
               </>
             ) : (
               <Link to="/login" style={{ textDecoration: "none" }}>
-                <MenuItem>Login</MenuItem>
+                <MenuItem>{t("login")}</MenuItem>
               </Link>
             )}
             <Link to="/cart" style={{ textDecoration: "none" }}>

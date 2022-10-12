@@ -6,6 +6,7 @@ import { Add, Remove, RemoveCircle } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { adjustQuantities, removeProduct, reset } from "../redux/cartRedux";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Container = styled.div``;
 const Wrapper = styled.div``;
@@ -91,9 +92,9 @@ const Price = styled.div`
 `;
 const BottomOrderSummery = styled.div`
   flex: 1;
-  max-height: 60vh;
+  max-height: 70vh;
   border: 1px solid;
-  border-radius: 10%;
+  border-radius: 5%;
   display: flex;
   flex-direction: column;
 `;
@@ -126,6 +127,7 @@ const AddToWishlistButton = styled.button`
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const handleRemove = (e, product) => {
     e.preventDefault();
     dispatch(removeProduct(product));
@@ -144,18 +146,20 @@ const Cart = () => {
       <Navbar />
       <Wrapper>
         <Top>
-          <TopTitle>Your Bag</TopTitle>
+          <TopTitle>{t("your_bag")}</TopTitle>
           <TopSecondRow>
             <Link to={"/products"}>
-              <TopButton color="gray">Continue Shopping</TopButton>
+              <TopButton color="gray">{t("continue_shopping")}</TopButton>
             </Link>
             <TopMiddleContent>
               <TopMiddleContentItem>
-                Shopping Bag({cart.quantity})
+                {t("shopping_bag")}({cart.quantity})
               </TopMiddleContentItem>
-              <TopMiddleContentItem>Your Wishlist(0)</TopMiddleContentItem>
+              <TopMiddleContentItem>
+                {t("your_wishlist")}(0)
+              </TopMiddleContentItem>
             </TopMiddleContent>
-            <TopButton color="black">Checkout Now</TopButton>
+            <TopButton color="black">{t("checkout_now")}</TopButton>
           </TopSecondRow>
         </Top>
         <Bottom>
@@ -198,27 +202,31 @@ const Cart = () => {
           </BottomProductList>
           <BottomOrderSummery>
             <OderSummeryItem fontSize="30px" fontWeight="200">
-              Order Summery
+              {t("order_summery")}
             </OderSummeryItem>
             <OderSummeryItem fontSize="20px" fontWeight="400">
-              <OrderSummeryItemText>Subtotal:</OrderSummeryItemText>
+              <OrderSummeryItemText>{t("subtotal")}:</OrderSummeryItemText>
               <OrderSummeryItemPrice>${cart.total}</OrderSummeryItemPrice>
             </OderSummeryItem>
             <OderSummeryItem fontSize="20px" fontWeight="400">
-              <OrderSummeryItemText>Estimated Shipping:</OrderSummeryItemText>
+              <OrderSummeryItemText>
+                {t("estimated_shipping")}:
+              </OrderSummeryItemText>
               <OrderSummeryItemPrice>$5.90</OrderSummeryItemPrice>
             </OderSummeryItem>
             <OderSummeryItem fontSize="20px" fontWeight="400">
-              <OrderSummeryItemText>Shipping Discount:</OrderSummeryItemText>
+              <OrderSummeryItemText>
+                {t("shipping_discount")}:
+              </OrderSummeryItemText>
               <OrderSummeryItemPrice>$5.90</OrderSummeryItemPrice>
             </OderSummeryItem>
             <OderSummeryItem fontSize="30px" fontWeight="600">
-              <OrderSummeryItemText>Total:</OrderSummeryItemText>
+              <OrderSummeryItemText>{t("total")}:</OrderSummeryItemText>
               <OrderSummeryItemPrice>${cart.total}</OrderSummeryItemPrice>
             </OderSummeryItem>
-            <CheckoutButton>Checkout Now</CheckoutButton>
+            <CheckoutButton>{t("checkout_now")}</CheckoutButton>
             <CheckoutButton onClick={(e) => handleReset(e)}>
-              Reset
+              {t("reset")}
             </CheckoutButton>
           </BottomOrderSummery>
         </Bottom>

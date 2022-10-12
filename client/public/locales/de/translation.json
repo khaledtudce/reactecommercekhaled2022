@@ -1,4 +1,26 @@
 {
-    "logo_name": "Die Kaynat",
-    "how_are_you": "wie gehts"
+    "logo_name": "KAYNAT",
+    "home": "Startseite",
+    "register": "Registrieren",
+    "logout": "Abmelden",
+    "login":"Anmelden",    
+    "shop_now":"Jetzt einkaufen",
+    
+    "newsletter":"Newsletter",
+    "get_timely_updates_from_your_favourite_products":"Erhalten Sie aktuelle Informationen über Ihre Lieblingsprodukte",
+
+    "your_bag":"Ihr Einkaufstasche",
+    "shopping_bag":"Einkaufstasche",
+    "your_wishlist":"Ihre Wunschliste",
+    "continue_shopping":"Weiter einkaufen",
+    "checkout_now":"Jetzt zur Kasse",
+    "order_summery":"Bestellung Übersicht",
+    "subtotal":"Zwischensumme",
+    "estimated_shipping":"Voraussichtlicher Versand",
+    "shipping_discount":"Versand-Rabatt",
+    "total":"Insgesamt.",
+    "reset":"Zurücksetzen",
+
+    "userful_links":"Nützliche Links",
+    "contact":"Kontakt"
 }

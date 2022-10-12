@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 import {
   Facebook,
   Instagram,
@@ -75,10 +76,11 @@ const RightItem = styled.div`
 `;
 
 const Footer = () => {
+  const { t } = useTranslation();
   return (
     <Container>
       <Left>
-        <LeftTitle>Kaynat.</LeftTitle>
+        <LeftTitle>{t("logo_name")}</LeftTitle>
         <LeftDesc>This is the footer of the application</LeftDesc>
         <LeftSocialMediaLogos>
           <RoundBackground color="blue">
@@ -96,7 +98,7 @@ const Footer = () => {
         </LeftSocialMediaLogos>
       </Left>
       <Middle>
-        <Title>Useful Links</Title>
+        <Title>{t("userful_links")}</Title>
         <MiddleDesc>
           <MiddleDescItems>Home</MiddleDescItems>
           <MiddleDescItems>Cart</MiddleDescItems>
@@ -110,7 +112,7 @@ const Footer = () => {
         </MiddleDesc>
       </Middle>
       <Right>
-        <Title>Contact</Title>
+        <Title>{t("contact")}</Title>
         <RightItem>
           <Room /> Grevesmühlener Straße 51
         </RightItem>

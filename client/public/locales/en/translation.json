@@ -1,4 +1,26 @@
 {
     "logo_name": "Kaynat",
-    "how_are_you": "how are you"
+    "home": "Home",
+    "register": "Register",
+    "logout": "Logout",
+    "login":"Login",
+    "shop_now":"Shop now",
+    
+    "newsletter":"Newsletter",
+    "get_timely_updates_from_your_favourite_products":"Get timely updates from your favourite products",
+
+    "your_bag":"Your bag",
+    "shopping_bag":"Shopping Bag",
+    "your_wishlist":"Your wishlist",
+    "continue_shopping":"Continue Shopping",
+    "checkout_now":"Checkout Now",
+    "order_summery":"Order Summery",
+    "subtotal":"Subtotal",
+    "estimated_shipping":"Estimated Shipping",
+    "shipping_discount":"Shipping discount",
+    "total":"Total",
+    "reset":"Reset",
+
+    "userful_links":"Useful links",
+    "contact":"Contact"
 }
