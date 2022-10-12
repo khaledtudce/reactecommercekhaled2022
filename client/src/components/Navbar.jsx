@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Badge } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/userRedux";
+import { useTranslation } from "react-i18next";
 
 const Container = styled.div`
   height: 60px;
@@ -21,6 +22,9 @@ const Left = styled.div`
 `;
 const Language = styled.span`
   font-size: 14px;
+`;
+const Select = styled.select`
+  padding: 5px;
   cursor: pointer;
 `;
 const SearchContainer = styled.span`
@@ -60,11 +64,17 @@ const MenuItem = styled.div`
 const Navbar = () => {
   const quantity = useSelector((state) => state.cart.quantity);
   const currentUser = useSelector((state) => state.user.currentUser);
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const handleClick = (e) => {
     e.preventDefault();
     dispatch(logout());
     console.log("user logged out");
+  };
+  const handleLanguageSelect = (selectedLanguage) => {
+    if (selectedLanguage === "en") i18n.changeLanguage("en-US");
+    if (selectedLanguage === "de") i18n.changeLanguage("de-DE");
+    if (selectedLanguage === "bd") i18n.changeLanguage("bd-BD");
   };
 
   return (
@@ -72,14 +82,20 @@ const Navbar = () => {
       <Container>
         <Wrapper>
           <Left>
-            <Language>EN</Language>
+            <Language>
+              <Select onChange={(e) => handleLanguageSelect(e.target.value)}>
+                <option value="en">en</option>
+                <option value="de">de</option>
+                <option value="bd">bd</option>
+              </Select>
+            </Language>
             <SearchContainer>
               <Input placeholder="search"></Input>
               <Search style={{ fontSize: 16, color: "gray" }} />
             </SearchContainer>
           </Left>
           <Center>
-            <Logo>Kaynat.</Logo>
+            <Logo>{t("logo_name")}</Logo>
           </Center>
           <Right>
             <Link to="/" style={{ textDecoration: "none" }}>
