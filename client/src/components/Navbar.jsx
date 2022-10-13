@@ -5,6 +5,8 @@ import { Badge } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/userRedux";
 import { useTranslation } from "react-i18next";
+import { setLanaguageselection } from "../redux/utilityRedux";
+import { useState } from "react";
 
 const Container = styled.div`
   height: 60px;
@@ -66,15 +68,31 @@ const Navbar = () => {
   const currentUser = useSelector((state) => state.user.currentUser);
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
+  const [language, setLanguage] = useState(
+    useSelector((state) => state.utility.lanaguageselection)
+  );
   const handleClick = (e) => {
     e.preventDefault();
     dispatch(logout());
     console.log("user logged out");
   };
   const handleLanguageSelect = (selectedLanguage) => {
-    if (selectedLanguage === "en") i18n.changeLanguage("en-US");
-    if (selectedLanguage === "de") i18n.changeLanguage("de-DE");
-    if (selectedLanguage === "bd") i18n.changeLanguage("bd-BD");
+    if (selectedLanguage === "en") {
+      i18n.changeLanguage("en-US");
+      // can I use useMomo here?
+      dispatch(setLanaguageselection(selectedLanguage));
+      setLanguage(selectedLanguage);
+    }
+    if (selectedLanguage === "de") {
+      i18n.changeLanguage("de-DE");
+      dispatch(setLanaguageselection(selectedLanguage));
+      setLanguage(selectedLanguage);
+    }
+    if (selectedLanguage === "bd") {
+      i18n.changeLanguage("bd-BD");
+      dispatch(setLanaguageselection(selectedLanguage));
+      setLanguage(selectedLanguage);
+    }
   };
 
   return (
@@ -83,7 +101,10 @@ const Navbar = () => {
         <Wrapper>
           <Left>
             <Language>
-              <Select onChange={(e) => handleLanguageSelect(e.target.value)}>
+              <Select
+                value={language}
+                onChange={(e) => handleLanguageSelect(e.target.value)}
+              >
                 <option value="en">en</option>
                 <option value="de">de</option>
                 <option value="bd">bd</option>

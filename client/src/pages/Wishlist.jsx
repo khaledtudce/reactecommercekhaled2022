@@ -113,7 +113,7 @@ const Wishlist = () => {
       <Navbar />
       <Wrapper>
         <Top>
-          <TopTitle>{t("your_bag")}</TopTitle>
+          <TopTitle>{t("your_wishlist")}</TopTitle>
           <TopSecondRow>
             <Link to={"/products"}>
               <TopButton color="gray">{t("continue_shopping")}</TopButton>
