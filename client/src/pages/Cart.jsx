@@ -5,9 +5,13 @@ import Footer from "../components/Footer";
 import { Add, Remove, RemoveCircle } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { adjustQuantities, removeProduct, reset } from "../redux/cartRedux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { addProduct } from "../redux/wishRedux";
+import StripeCheckout from "react-stripe-checkout";
+import { useState } from "react";
+import { useEffect } from "react";
+import { userRequest } from "../requestMethods";
 
 const Container = styled.div``;
 const Wrapper = styled.div``;
@@ -113,7 +117,7 @@ const CheckoutButton = styled.button`
   padding: 10px;
   cursor: pointer;
   color: white;
-  background-color: black;
+  background-color: ${(props) => props.color};
 `;
 const AddToWishlistButton = styled.button`
   margin: 0px 20px 30px;
@@ -130,6 +134,9 @@ const Cart = () => {
   const wishlist = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const [stripeToken, setStripeToken] = useState(null);
+  const history = useHistory();
+
   const handleRemove = (e, product) => {
     e.preventDefault();
     dispatch(removeProduct(product));
@@ -146,6 +153,23 @@ const Cart = () => {
     dispatch(addProduct(item));
     dispatch(removeProduct(item));
   };
+  const onToken = (token) => {
+    setStripeToken(token);
+  };
+
+  useEffect(() => {
+    const submitStripe = async () => {
+      try {
+        const res = await userRequest.post("/checkout/payment", {
+          tokenId: stripeToken.id,
+          amount: cart.total * 100,
+        });
+        dispatch(reset());
+        history.push("/success", { stripeData: res.data, products: cart });
+      } catch (err) {}
+    };
+    stripeToken && submitStripe();
+  }, [stripeToken, cart, history, dispatch]);
 
   return (
     <Container>
@@ -235,8 +259,23 @@ const Cart = () => {
               <OrderSummeryItemText>{t("total")}:</OrderSummeryItemText>
               <OrderSummeryItemPrice>${cart.total}</OrderSummeryItemPrice>
             </OderSummeryItem>
-            <CheckoutButton>{t("checkout_now")}</CheckoutButton>
-            <CheckoutButton onClick={(e) => handleReset(e)}>
+            <StripeCheckout
+              stripeKey="pk_test_51LadlKDZGO6oz7V6C4gMMIm3JmybvH75WYSnz7N80sj5nE22lljRcuR1lb7zH8Rb4iH5G7LLq6o9pL9k9sEKXREq00QdK6f12x"
+              name={t("logo_name")}
+              image="https://avatars.githubusercontent.com/u/1486366?v=4"
+              billingAddress
+              shippingAddress
+              description={"Your total is: $" + cart.total}
+              amount={cart.total * 100}
+              token={onToken}
+            >
+              <CheckoutButton color="black">{t("checkout_now")}</CheckoutButton>
+            </StripeCheckout>
+            <CheckoutButton
+              style={{ bottom: "0", width: "140px", border: "none" }}
+              color="red"
+              onClick={(e) => handleReset(e)}
+            >
               {t("reset")}
             </CheckoutButton>
           </BottomOrderSummery>
