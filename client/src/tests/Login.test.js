@@ -11,3 +11,9 @@ test("username input should be rendered", () => {
   const userInputEl = screen.getByPlaceholderText(/username/i);
   expect(userInputEl).toBeInTheDocument();
 });
+
+test("username value should be empty", () => {
+  render(<Login />);
+  const userInputEl = screen.getByPlaceholderText(/username/i);
+  expect(userInputEl.value).toBe("");
+});
