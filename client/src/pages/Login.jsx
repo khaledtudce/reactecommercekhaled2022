@@ -64,15 +64,21 @@ const Login = () => {
         <Form>
           <Input
             placeholder="username"
+            value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
           <Input
-            placeholder="passowrd"
+            placeholder="password"
+            value={password}
             type="password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button onClick={(e) => handleClick(e)} disabled={isFetching}>
-            Login
+          <Button
+            data-testid="submitButton"
+            onClick={(e) => handleClick(e)}
+            disabled={!username || !password}
+          >
+            {isFetching ? "Please wait" : "Login"}
           </Button>
         </Form>
         {error && <Error>Something went wrong</Error>}
