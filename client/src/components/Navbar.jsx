@@ -79,7 +79,6 @@ const Navbar = () => {
   const handleLanguageSelect = (selectedLanguage) => {
     if (selectedLanguage === "en") {
       i18n.changeLanguage("en-US");
-      // can I use useMomo here?
       dispatch(setLanaguageselection(selectedLanguage));
       setLanguage(selectedLanguage);
     }
