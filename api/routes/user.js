@@ -34,7 +34,7 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
     const deletedUser = await User.findByIdAndDelete(req.params.id);
     res.status(200).json("User id: " + req.params.id + "has been deleted");
   } catch (error) {
-    res.status(200).json("Could not delete the user: " + req.params.id);
+    res.status(500).json("Could not delete the user: " + req.params.id);
   }
 });
 
