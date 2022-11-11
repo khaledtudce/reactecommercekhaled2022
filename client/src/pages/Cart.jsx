@@ -118,6 +118,10 @@ const CheckoutButton = styled.button`
   cursor: pointer;
   color: white;
   background-color: ${(props) => props.color};
+  &:disabled {
+    color: red;
+    cursor: not-allowed;
+  }
 `;
 const AddToWishlistButton = styled.button`
   margin: 0px 20px 30px;
@@ -192,7 +196,20 @@ const Cart = () => {
                 </TopMiddleContentItem>
               </Link>
             </TopMiddleContent>
-            <TopButton color="black">{t("checkout_now")}</TopButton>
+            <StripeCheckout
+              stripeKey="pk_test_51LadlKDZGO6oz7V6C4gMMIm3JmybvH75WYSnz7N80sj5nE22lljRcuR1lb7zH8Rb4iH5G7LLq6o9pL9k9sEKXREq00QdK6f12x"
+              name={t("logo_name")}
+              image="https://avatars.githubusercontent.com/u/1486366?v=4"
+              billingAddress
+              shippingAddress
+              description={"Your total is: $" + cart.total}
+              amount={cart.total * 100}
+              token={onToken}
+            >
+              <TopButton disabled={cart.total <= 0} color="black">
+                {t("checkout_now")}
+              </TopButton>
+            </StripeCheckout>
           </TopSecondRow>
         </Top>
         <Bottom>
@@ -269,7 +286,9 @@ const Cart = () => {
               amount={cart.total * 100}
               token={onToken}
             >
-              <CheckoutButton color="black">{t("checkout_now")}</CheckoutButton>
+              <CheckoutButton disabled={cart.total <= 0} color="black">
+                {t("checkout_now")}
+              </CheckoutButton>
             </StripeCheckout>
             <CheckoutButton
               style={{ bottom: "0", width: "140px", border: "none" }}
