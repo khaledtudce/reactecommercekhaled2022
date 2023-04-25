@@ -13,7 +13,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        cd /client
+        cd client
         npm install --save --legacy-peer-deps
         
     - name: Build
